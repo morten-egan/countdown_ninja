@@ -2,6 +2,24 @@ create or replace package body countdown_ninja
 
 as
 
+  procedure zero_call (
+    countdown_name      in        varchar2
+  )
+
+  as
+
+    pragma              autonomous_transaction;
+
+  begin
+
+    execute immediate 'begin ' || sys_context('countdown_ninja_c', countdown_name || '_zerocall') || '; end;';
+
+    exception
+      when others then
+        null;
+
+  end zero_call;
+
   procedure init (
     countdown_name              in        varchar2
     , start_from                in        number
@@ -59,10 +77,10 @@ as
       l_ret_var := to_number(sys_context('countdown_ninja_c', countdown_name)) - 1;
       if l_ret_var = 0 then
         if sys_context('countdown_ninja_c', countdown_name || '_zerocall') is not null then
-          execute immediate 'begin ' || sys_context('countdown_ninja_c', countdown_name || '_zerocall') || '; end;';
-          dbms_session.clear_context(namespace => 'stats_ninja_c', attribute => countdown_name || '_zerocall');
+          zero_call(countdown_name);
+          dbms_session.clear_context(namespace => 'countdown_ninja_c', attribute => countdown_name || '_zerocall');
         end if;
-        dbms_session.clear_context(namespace => 'stats_ninja_c', attribute => countdown_name);
+        dbms_session.clear_context(namespace => 'countdown_ninja_c  ', attribute => countdown_name);
       else
         dbms_session.set_context('countdown_ninja_c', countdown_name, l_ret_var);
       end if;
@@ -72,7 +90,7 @@ as
 
     exception
       when others then
-        return -1;
+        raise;
 
   end cd;
 
