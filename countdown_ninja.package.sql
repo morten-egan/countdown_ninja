@@ -29,5 +29,14 @@ as
     countdown_name             in        varchar2
   );
 
+  /** Countdown the ticker using a function
+  * @author Morten Egan
+  * @return number Returns the value of the coundown ticker.
+  */
+  function cd (
+    countdown_name             in        varchar2
+  )
+  return number;
+
 end countdown_ninja;
 /
