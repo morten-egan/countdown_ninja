@@ -29,3 +29,4 @@ Package body created.
 == Procedures and Functions
 
 == Examples
+http://www.codemonth.dk/code_is_good/dev_qa_prod.assert?condition=codemonth::::6560[Codemonth site with examples.]
