@@ -16,6 +16,16 @@ The schema where you install it to, needs the following privileges
 
 == Installation
 
+Log in with a user, that can satisfy the above, pre-requisites, and run the following scripts in order.
+
+[source,sql]
+SQL> @countdown_ninja_c.context.sql
+Context created.
+SQL> @"countdown_ninja.package.sql"
+Package created.
+SQL> @"countdown_ninja.package body.sql"
+Package body created.
+
 == Procedures and Functions
 
 == Examples
